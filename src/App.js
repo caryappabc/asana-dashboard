@@ -58,22 +58,18 @@ const App = () => {
 		const id = e.target.value;
 		client.tasks.getTask(id, { opt_pretty: true }).then((response) => {
 			console.log(response);
-			const tdetails = {
-				id: response.gid,
-				name: response.name,
-				approval_status: response.approval_status,
-				completed: response.completed ? "Yes" : "No",
-				completed_at: response.completed_at,
-				created_at: response.created_at,
-			};
-			setTaskDetails(tdetails);
+			setTaskDetails(response);
 		});
 	};
 
 	return (
 		<div className="App">
-			<Typography>DashBoard {workspaceIds}</Typography>
-			<InputLabel id="project">Select a Project</InputLabel>
+			<Typography variant="h2" component="h3" color="textPrimary" gutterBottom>
+				DashBoard
+			</Typography>
+			<InputLabel className="space" id="project">
+				Select a Project
+			</InputLabel>
 			<Select labelId="project" onChange={onProjectChange}>
 				{projectIds.map((i) => (
 					<MenuItem key={i.id} value={i.id}>
@@ -81,7 +77,9 @@ const App = () => {
 					</MenuItem>
 				))}
 			</Select>
-			<InputLabel id="task">Select a Task</InputLabel>
+			<InputLabel className="space" id="task">
+				Select a Task
+			</InputLabel>
 			<Select labelId="task" onChange={onTaskChange}>
 				{projectId.map((i) => (
 					<MenuItem key={i.id} value={i.id}>

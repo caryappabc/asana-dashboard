@@ -11,3 +11,35 @@
 .space {
 	padding: 15px !important;
 }
+
+.Loading {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	width: auto;
+	height: auto;
+	justify-content: space-around;
+	padding-top: 10%;
+}
+
+.Loading img {
+	position: relative;
+	width: 256px;
+	padding-left: 40%;
+}
+
+.Loading h4 {
+	animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}

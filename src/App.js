@@ -1,93 +1,91 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import img from "./loading.gif";
 import asana from "asana";
 import Info from "./components/Info";
-import { MenuItem, Select, InputLabel, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 const token = "1/1196026741848245:f60fabf352d8af6b500949e94733da11";
 //const token = "1/1176686911957013:249036f7326e929a495fb524a964875e";
 
 const App = () => {
-	const [workspaceIds, setWorkspaceId] = useState([]);
-	const [projectIds, setProjectId] = useState([]);
-	const [projectId, setPid] = useState([]);
 	const [taskDetails, setTaskDetails] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	const client = asana.Client.create().useAccessToken(token);
+	let workspace_id = "1176686913455770";
+	let workspace_id_maersk = "8532748615324";
 
 	useEffect(() => {
-		client.workspaces
-			.getWorkspaces({ opt_fields: "name", opt_pretty: true })
-			.then((response) => {
-				response.data.map((i) => {
-					console.log(i.gid);
-					setWorkspaceId(i.gid);
+		(async () => {
+			let projects = await client.projects
+				.getProjects({
+					workspace: workspace_id_maersk,
+					limit: 20,
+					opt_pretty: true,
+				})
+				.then((result) => {
+					return result.data.map((project) => {
+						return project.gid;
+					});
 				});
-			});
-	}, []);
 
-	useEffect(() => {
-		client.projects
-			.getProjectsForWorkspace("8532748615324", {
-				opt_firld: "name",
-				opt_pretty: true,
-			})
-			.then((response) => {
-				const projects = response.data.map((i) => ({
-					id: i.gid,
-					name: i.name,
-				}));
-				return setProjectId(projects);
+			let tasks = projects.map((p) =>
+				client.tasks
+					.getTasksForProject(p, { limit: 20, opt_pretty: true })
+					.then((result) => {
+						return result.data.map((r) => r.gid);
+					})
+			);
+
+			let taskdetails = await Promise.all(tasks).then((result) =>
+				result.map((projects) =>
+					projects.map((taskid) =>
+						client.tasks
+							.getTask(taskid, { limit: 20, opt_pretty: true })
+							.then((taskdetails) => {
+								return taskdetails;
+							})
+					)
+				)
+			);
+
+			let vals = taskdetails.map(async (tp) => {
+				let val = await Promise.all(tp).then((tpr) => {
+					let dt = tpr.map((tk) => {
+						let details = {
+							gid: tk.gid,
+							name: tk.name,
+							completed_on: tk.completed_at,
+							assignee: tk.assignee,
+							customfield: tk.custom_fields,
+						};
+						return details;
+					});
+					return dt;
+				});
+				return val;
 			});
+
+			await Promise.all(vals).then((data) => {
+				setTaskDetails(data);
+			});
+			setLoading(false);
+		})();
 	});
 
-	const onProjectChange = async (e) => {
-		const id = e.target.value;
-		client.tasks
-			.getTasksForProject(id, { opt_field: "name", opt_pretty: true })
-			.then((response) => {
-				const tasks = response.data.map((i) => ({
-					id: i.gid,
-					name: i.name,
-				}));
-				console.log(tasks);
-				setPid(tasks);
-			});
-	};
-
-	const onTaskChange = async (e) => {
-		const id = e.target.value;
-		client.tasks.getTask(id, { opt_pretty: true }).then((response) => {
-			console.log(response);
-			setTaskDetails(response);
-		});
-	};
-
 	return (
-		<div className="App">
-			<Typography variant="h2" component="h3" color="textPrimary" gutterBottom>
-				DashBoard
-			</Typography>
-			<InputLabel className="space" id="project">
-				Select a Project
-			</InputLabel>
-			<Select labelId="project" onChange={onProjectChange}>
-				{projectIds.map((i) => (
-					<MenuItem key={i.id} value={i.id}>
-						{i.name}
-					</MenuItem>
-				))}
-			</Select>
-			<InputLabel className="space" id="task">
-				Select a Task
-			</InputLabel>
-			<Select labelId="task" onChange={onTaskChange}>
-				{projectId.map((i) => (
-					<MenuItem key={i.id} value={i.id}>
-						{i.name}
-					</MenuItem>
-				))}
-			</Select>
-			<Info details={taskDetails} />
+		<div>
+			{loading === false ? (
+				<div className="App">
+					<Typography variant="h3">Asana Dashboard</Typography>
+					<Info details={taskDetails} />
+				</div>
+			) : (
+				<div className="Loading">
+					<img src={img} />
+					<h4>Loading......</h4>
+				</div>
+			)}
 		</div>
 	);
 };

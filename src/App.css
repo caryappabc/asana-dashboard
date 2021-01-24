@@ -18,14 +18,9 @@
 	flex-direction: column;
 	width: auto;
 	height: auto;
+	align-items: center;
 	justify-content: space-around;
-	padding-top: 10%;
-}
-
-.Loading img {
-	position: relative;
-	width: 256px;
-	padding-left: 40%;
+	padding-top: 30%;
 }
 
 .Loading h4 {

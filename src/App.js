@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import img from "./loading.gif";
 import asana from "asana";
 import Info from "./components/Info";
-import { Typography } from "@material-ui/core";
+import { Typography, CircularProgress } from "@material-ui/core";
 const token = "1/1196026741848245:f60fabf352d8af6b500949e94733da11";
 //const token = "1/1176686911957013:249036f7326e929a495fb524a964875e";
 
@@ -82,7 +81,11 @@ const App = () => {
 				</div>
 			) : (
 				<div className="Loading">
-					<img src={img} />
+					<CircularProgress
+						size="10rem"
+						thickness="1.0"
+						variant="indeterminate"
+					/>
 					<h4>Loading......</h4>
 				</div>
 			)}

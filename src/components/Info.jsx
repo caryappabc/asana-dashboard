@@ -3,7 +3,6 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import BarGraphHrsPerMonth from "./BarGraphHrsPerMonth";
 import SummaryofIMS from "./SummaryofIMS";
 import TotalRequest from "./TotalRequest";
-import { render } from "@testing-library/react";
 
 const Info = ({ details }) => {
 	/*let frmdt = new Date(details.created_at);

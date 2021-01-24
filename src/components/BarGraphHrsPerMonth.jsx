@@ -2,8 +2,6 @@ import React from "react";
 import {
 	BarChart,
 	Bar,
-	Brush,
-	ReferenceLine,
 	XAxis,
 	YAxis,
 	CartesianGrid,

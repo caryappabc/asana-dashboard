@@ -83,7 +83,7 @@ const App = () => {
 				<div className="Loading">
 					<CircularProgress
 						size="10rem"
-						thickness="1.0"
+						thickness={1.0}
 						variant="indeterminate"
 					/>
 					<h4>Loading......</h4>

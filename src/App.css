@@ -25,13 +25,14 @@
 	animation: blink 1.2s infinite;
 }
 
-.container{
-	display:flex;
-	width:100vw;
-	height:auto;
-	flex-wrap:wrap;
+.container {
+	display: flex;
+	width: 100vw;
+	height: auto;
+	flex-wrap: wrap;
 	align-items: center;
-	justify-content:center;
+	justify-content: center;
+	padding-top: 50px;
 }
 
 @keyframes blink {

@@ -1,0 +1,32 @@
+[debug] [2021-01-26T18:35:55.350Z] ----------------------------------------------------------------------
+[debug] [2021-01-26T18:35:55.359Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\carya\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2021-01-26T18:35:55.361Z] CLI Version:   9.2.2
+[debug] [2021-01-26T18:35:55.362Z] Platform:      win32
+[debug] [2021-01-26T18:35:55.362Z] Node Version:  v14.15.1
+[debug] [2021-01-26T18:35:55.367Z] Time:          Wed Jan 27 2021 00:05:55 GMT+0530 (India Standard Time)
+[debug] [2021-01-26T18:35:55.368Z] ----------------------------------------------------------------------
+[debug] [2021-01-26T18:35:55.368Z] 
+[debug] [2021-01-26T18:35:55.406Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-01-26T18:35:55.408Z] > authorizing via signed-in user
+[debug] [2021-01-26T18:35:55.408Z] [iam] checking project ims-dashboard-385a7 for permissions ["firebase.projects.get"]
+[debug] [2021-01-26T18:35:55.417Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/ims-dashboard-385a7:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-01-26T18:35:58.242Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 26 Jan 2021 18:35:58 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1214","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-01-26T18:35:58.245Z] > refreshing access token with scopes: []
+[debug] [2021-01-26T18:35:58.245Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-01-26T18:35:58.572Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","date":"Tue, 26 Jan 2021 18:35:58 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-01-26T18:35:58.614Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ims-dashboard-385a7 [none]
+[debug] [2021-01-26T18:35:59.153Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ims-dashboard-385a7 200
+[debug] [2021-01-26T18:35:59.153Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ims-dashboard-385a7 {"projectId":"ims-dashboard-385a7","projectNumber":"552519584753","displayName":"ims-dashboard","name":"projects/ims-dashboard-385a7","resources":{"hostingSite":"ims-dashboard-385a7"},"state":"ACTIVE"}
+[info] 
+[info] === Serving from 'F:\VSCode workspaces\react_projects\asana-dashboard'...
+[info] 
+[debug] [2021-01-26T18:35:59.162Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ims-dashboard-385a7/webApps/-/config [none]
+[debug] [2021-01-26T18:36:00.492Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ims-dashboard-385a7/webApps/-/config 200
+[debug] [2021-01-26T18:36:00.492Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ims-dashboard-385a7/webApps/-/config {"projectId":"ims-dashboard-385a7","storageBucket":"ims-dashboard-385a7.appspot.com","apiKey":"AIzaSyCVpCw1gZOkrlDu4l0a2zFueeiZOp6QVqA","authDomain":"ims-dashboard-385a7.firebaseapp.com","messagingSenderId":"552519584753"}
+[info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: 127.0.0.1 - - [26/Jan/2021:18:36:21 +0000] "GET / HTTP/1.1" 200 1689 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [26/Jan/2021:18:36:21 +0000] \"GET / HTTP/1.1\" 200 1689 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [26/Jan/2021:18:36:21 +0000] "GET /%PUBLIC_URL%/favicon.ico HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [26/Jan/2021:18:36:21 +0000] \"GET /%PUBLIC_URL%/favicon.ico HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36\""}}
+[info] i  hosting: 127.0.0.1 - - [26/Jan/2021:18:36:22 +0000] "GET /%PUBLIC_URL%/manifest.json HTTP/1.1" 500 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [26/Jan/2021:18:36:22 +0000] \"GET /%PUBLIC_URL%/manifest.json HTTP/1.1\" 500 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36\""}}

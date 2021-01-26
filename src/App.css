@@ -5,9 +5,7 @@
 	width: auto;
 	height: auto;
 	justify-content: space-around;
-	padding: 100px;
 }
-
 .space {
 	padding: 15px !important;
 }
@@ -19,12 +17,21 @@
 	width: auto;
 	height: auto;
 	align-items: center;
-	justify-content: space-around;
-	padding-top: 30%;
+	justify-content: center;
+	padding-top: 20%;
 }
 
 .Loading h4 {
 	animation: blink 1.2s infinite;
+}
+
+.container{
+	display:flex;
+	width:100vw;
+	height:auto;
+	flex-wrap:wrap;
+	align-items: center;
+	justify-content:center;
 }
 
 @keyframes blink {

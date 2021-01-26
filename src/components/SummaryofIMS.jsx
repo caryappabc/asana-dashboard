@@ -22,7 +22,7 @@ const SummaryofIMS = ({ data }) => {
 		const sum = databymonths[month]
 			.map((task) => task.Set_Hours)
 			.reduce((prev, curr) => prev + curr, 0);
-		const remaining = 426 * 12 - sum;
+		const remaining = 2982 - sum;
 		plotdata.push({
 			month: month,
 			hours: sum,
@@ -38,9 +38,11 @@ const SummaryofIMS = ({ data }) => {
 			<Tooltip />
 			<Legend />
 			<Bar dataKey="hours" fill="#2B4F69">
-				<LabelList dataKey="months" position="top" />
+				<LabelList dataKey="hours" position="top" />
 			</Bar>
-			<Bar dataKey="remaining" fill="#FF995B" />
+			<Bar dataKey="remaining" fill="#FF995B">
+			<LabelList dataKey="remaining" position="top" />
+			</Bar>
 		</BarChart>
 	);
 };

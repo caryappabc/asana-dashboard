@@ -4,6 +4,7 @@ import {
 	Line,
 	XAxis,
 	YAxis,
+	LabelList,
 	CartesianGrid,
 	Tooltip,
 	Legend,
@@ -36,7 +37,9 @@ const TotalRequest = ({ data }) => {
 				dataKey="numofreq"
 				stroke="#8884d8"
 				strokeWidth="2"
-			/>
+			>
+			<LabelList dataKey="numofreq" position="top" />
+			</Line>
 		</LineChart>
 	);
 };

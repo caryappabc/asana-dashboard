@@ -4,12 +4,13 @@ import {
 	Bar,
 	XAxis,
 	YAxis,
+	LabelList,
 	CartesianGrid,
 	Tooltip,
 	Legend,
 } from "recharts";
 
-const BarGraphHrsPerMonth = ({ data }) => {
+const HrsPerRegion = ({ data }) => {
 	let databyregion = data.reduce((r, a) => {
 		r[a.Region] = [...(r[a.Region] || []), a];
 		return r;
@@ -36,10 +37,14 @@ const BarGraphHrsPerMonth = ({ data }) => {
 			<YAxis />
 			<Tooltip />
 			<Legend />
-			<Bar dataKey="hours" fill="#2B4F69" />
-			<Bar dataKey="remaining" fill="#FF995B" />
+			<Bar dataKey="hours" fill="#2B4F69" >
+			<LabelList dataKey="hours" position="top" />
+			</Bar>
+			<Bar dataKey="remaining" fill="#FF995B" >
+			<LabelList dataKey="remaining" position="top" />
+			</Bar>
 		</BarChart>
 	);
 };
 
-export default BarGraphHrsPerMonth;
+export default HrsPerRegion;

@@ -10,7 +10,31 @@ import {
 	Legend,
 } from "recharts";
 
-const SummaryofIMS = ({ data }) => {
+const SummaryofIMS = ({ data, region, type, po }) => {
+	data = data
+		.filter((d) => {
+			return d.Project_status !== "On Hold";
+		})
+		.filter((d) => d.Project_status !== "Cancelled");
+
+	if (!(region.length === 0)) {
+		data = data.filter((d) => {
+			return region.includes(d.Region);
+		});
+	}
+
+	if (!(type.length === 0)) {
+		data = data.filter((d) => {
+			return type.includes(d.Request_Type);
+		});
+	}
+
+	if (!(po.length === 0)) {
+		data = data.filter((d) => {
+			return po.includes(d.assignee);
+		});
+	}
+
 	let databymonths = data.reduce((r, a) => {
 		r[a.Handshake_Month] = [...(r[a.Handshake_Month] || []), a];
 		return r;
@@ -22,6 +46,7 @@ const SummaryofIMS = ({ data }) => {
 		const sum = databymonths[month]
 			.map((task) => task.Set_Hours)
 			.reduce((prev, curr) => prev + curr, 0);
+
 		const remaining = 2982 - sum;
 		plotdata.push({
 			month: month,
@@ -31,17 +56,23 @@ const SummaryofIMS = ({ data }) => {
 	}
 
 	return (
-		<BarChart width={930} height={350} data={plotdata}>
+		<BarChart
+			width={930}
+			height={350}
+			data={plotdata}
+			maxBarSize={80}
+			margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+		>
 			<CartesianGrid strokeDasharray="3 3" />
 			<XAxis dataKey="month" />
 			<YAxis />
 			<Tooltip />
 			<Legend />
-			<Bar dataKey="hours" fill="#2B4F69">
-				<LabelList dataKey="hours" position="top" />
+			<Bar dataKey="hours" stackId="a" fill="#2B4F69">
+				<LabelList dataKey="hours" position="inside" />
 			</Bar>
-			<Bar dataKey="remaining" fill="#FF995B">
-			<LabelList dataKey="remaining" position="top" />
+			<Bar dataKey="remaining" stackId="a" fill="#FF995B">
+				<LabelList dataKey="remaining" position="outside" />
 			</Bar>
 		</BarChart>
 	);

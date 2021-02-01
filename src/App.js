@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import asana from "asana";
 import Drawerlayout from "./components/Drawerlayout";
-import { Typography, CircularProgress } from "@material-ui/core";
+import {
+	Typography,
+	CircularProgress,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 const token = "1/1196026741848245:f60fabf352d8af6b500949e94733da11";
@@ -31,8 +38,10 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "row",
 		alignItem: "center",
 		justifyContent: "center",
-		color: "white",
 		paddingTop: "40px",
+	},
+	year: {
+		marginLeft: "20px",
 	},
 }));
 
@@ -40,6 +49,8 @@ const App = () => {
 	const [taskDetails, setTaskDetails] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [didMount, setDidMount] = useState(false);
+	const [yearsList, setYearsList] = useState([]);
+	const [year, setYear] = useState();
 
 	const client = asana.Client.create().useAccessToken(token);
 	let workspace_id = "1176686913455770";
@@ -87,6 +98,17 @@ const App = () => {
 		"1197564797535796",
 	];
 	const classes = useStyles();
+
+	useEffect(() => {
+		var currentYear = new Date().getFullYear();
+		var years = [];
+		var startYear = 2020;
+		for (var i = startYear; i <= currentYear; i++) {
+			years.push(startYear++);
+		}
+		setYearsList(years);
+		setYear(currentYear);
+	}, []);
 
 	useEffect(() => {
 		(async () => {
@@ -147,6 +169,10 @@ const App = () => {
 		return null;
 	}
 
+	const handleChange = (event) => {
+		setYear(event.target.value);
+	};
+
 	return (
 		<div className="App">
 			{loading === false ? (
@@ -154,9 +180,19 @@ const App = () => {
 					<Grid className={classes.top} container spacing={3}>
 						<Grid item xs className={classes.header}>
 							<Typography variant="h3">IMS Dashboard - Asana</Typography>
+							<FormControl className={classes.year}>
+								<InputLabel>Year</InputLabel>
+								<Select value={year} onChange={handleChange}>
+									{yearsList.map((y) => (
+										<MenuItem key={y} value={y}>
+											{y}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
 						</Grid>
 						<Grid item xs>
-							<Drawerlayout details={taskDetails} />
+							<Drawerlayout details={taskDetails} year={year} />
 						</Grid>
 					</Grid>
 				</div>

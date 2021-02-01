@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
 	BarChart,
 	Bar,
@@ -10,39 +10,64 @@ import {
 	Legend,
 } from "recharts";
 
-const DelaybyReason = ({data}) => {
-    let delayed = data.filter((d) => {
+const DelaybyReason = ({ data, type, month, region, po }) => {
+	let delayed = data.filter((d) => {
 		return d.Project_status === "Delay";
-    });
-    let totalDelays = delayed.length;
-    let delaybyreason = delayed.reduce((r, a) => {
+	});
+
+	if (!(type.length === 0)) {
+		delayed = delayed.filter((d) => {
+			return type.includes(d.Request_Type);
+		});
+	}
+
+	if (!(month.length === 0)) {
+		delayed = delayed.filter((d) => {
+			return month.includes(d.Handshake_Month);
+		});
+	}
+	if (!(region.length === 0)) {
+		delayed = delayed.filter((d) => {
+			return region.includes(d.Region);
+		});
+	}
+	if (!(po.length === 0)) {
+		delayed = delayed.filter((d) => {
+			return po.includes(d.assignee);
+		});
+	}
+
+	let delaybyreason = delayed.reduce((r, a) => {
 		r[a.Reason_for_delay] = [...(r[a.Reason_for_delay] || []), a];
 		return r;
 	}, {});
-    
-    let plotdata = [];
 
+	let plotdata = [];
 
 	for (const reason in delaybyreason) {
-        let count = delaybyreason[reason].length;
-        let per = ((count/totalDelays)*100);
+		let count = delaybyreason[reason].length;
 		plotdata.push({
-            reason: reason,
-            percent:per,
+			reason: reason,
+			Num_of_delays: count,
 		});
-    }
-
+	}
 
 	return (
-		<BarChart width={930} height={350} data={plotdata} maxBarSize={80} >
+		<BarChart
+			width={930}
+			height={350}
+			data={plotdata}
+			maxBarSize={80}
+			margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+		>
 			<CartesianGrid strokeDasharray="3 3" />
 			<XAxis dataKey="reason" />
 			<YAxis />
 			<Tooltip />
 			<Legend />
-			<Bar dataKey="percent" fill="#2B4F69" >
-            <LabelList dataKey="percent" position="top" />
-            </Bar>
+			<Bar dataKey="Num_of_delays" fill="#2B4F69">
+				<LabelList dataKey="Num_of_delays" position="top" />
+			</Bar>
 		</BarChart>
 	);
 };

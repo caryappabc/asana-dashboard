@@ -387,7 +387,7 @@ const Drawerlayout = ({ details, year }) => {
 			<TabPanel value={value} index={3}>
 				<Card className="container">
 					<CardContent>
-						<ItterationperMonth data={fd} />
+						<ItterationperMonth data={fd} region={reg} />
 						<Typography className={classes.padding} variant="h5">
 							No of Projects with Iteration above 2
 						</Typography>

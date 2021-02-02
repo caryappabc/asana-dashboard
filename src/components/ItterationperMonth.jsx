@@ -35,10 +35,16 @@ const useStyles = makeStyles({
 	},
 });
 
-const ItterationperMonth = ({ data }) => {
+const ItterationperMonth = ({ data, region }) => {
 	const classes = useStyles();
 	const [value, setValue] = useState([]);
 	const [projects, setProjects] = useState([]);
+
+	if (!(region.length === 0)) {
+		data = data.filter((d) => {
+			return region.includes(d.Region);
+		});
+	}
 
 	data = data.filter((d) => {
 		return Number(d.Current_ittr) > 2;

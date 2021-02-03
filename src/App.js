@@ -12,7 +12,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-const token = "1/1196026741848245:f60fabf352d8af6b500949e94733da11";
+const token = process.env.REACT_APP_ACCESS_TOKEN;
+//const token = "1/1196026741848245:f60fabf352d8af6b500949e94733da11";
 //const token = "1/1176686911957013:249036f7326e929a495fb524a964875e";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,9 +54,8 @@ const App = () => {
 	const [year, setYear] = useState();
 
 	const client = asana.Client.create().useAccessToken(token);
-	let workspace_id = "1176686913455770";
-	let workspace_id_maersk = "8532748615324";
-	let projectids = [
+	{
+		/*let projectids = [
 		"1195131443542906",
 		"1196748897363362",
 		"1196748897363378",
@@ -96,7 +96,9 @@ const App = () => {
 		"1197564797535782",
 		"1197564797535789",
 		"1197564797535796",
-	];
+	];*/
+	}
+	let projectids = process.env.REACT_APP_PROJECTIDS.split(",");
 	const classes = useStyles();
 
 	useEffect(() => {

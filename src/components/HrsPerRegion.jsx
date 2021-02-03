@@ -46,11 +46,30 @@ const HrsPerRegion = ({ data, month, type, po }) => {
 		const sum = databyregion[reg]
 			.map((task) => task.Set_Hours)
 			.reduce((prev, curr) => prev + curr, 0);
-		const remaining = 426 * 12 - sum;
+		let remaining = databyregion[reg].map((task) => {
+			if (reg === "NAM") {
+				return 678.2 * 12 - sum;
+			} else if (reg === "LAM") {
+				return 418.5 * 12 - sum;
+			} else if (reg === "Europe") {
+				return 781.1 * 12 - sum;
+			} else if (reg === "CEN") {
+				return 732.1 * 12 - sum;
+			} else if (reg === "WCA") {
+				return 438.1 * 12 - sum;
+			} else if (reg === "APA") {
+				return 767.3 * 12 - sum;
+			} else if (reg === "Africa") {
+				return 438.1 * 12 - sum;
+			} else if (reg === "none") {
+				return 426 * 12 - sum;
+			}
+		});
+		remaining = parseFloat(remaining).toFixed(1);
 		plotdata.push({
 			region: reg,
 			hours: sum,
-			remaining: remaining,
+			remaining: Number(remaining),
 		});
 	}
 

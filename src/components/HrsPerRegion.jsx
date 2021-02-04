@@ -87,7 +87,7 @@ const HrsPerRegion = ({ data, month, type, po }) => {
 			<Tooltip />
 			<Legend />
 			<Bar dataKey="hours" stackId="a" fill="#2B4F69">
-				<LabelList dataKey="hours" position="inside" />
+				<LabelList dataKey="hours" position="inside" fill="#FFFFFF" />
 			</Bar>
 			<Bar dataKey="remaining" stackId="a" fill="#FF995B">
 				<LabelList dataKey="remaining" position="outside" />

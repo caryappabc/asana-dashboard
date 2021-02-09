@@ -100,7 +100,6 @@ const App = () => {
 			let vals = taskdetails.map(async (tp) => {
 				let val = await Promise.all(tp).then((tpr) => {
 					let dt = tpr.map((tk) => {
-						console.log(tk);
 						let details = {
 							gid: tk.gid,
 							name: tk.name,

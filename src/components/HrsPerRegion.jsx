@@ -31,7 +31,7 @@ const HrsPerRegion = ({ data, month, type, po }) => {
 
 	if (!(po.length === 0)) {
 		data = data.filter((d) => {
-			return po.includes(d.assignee);
+			return po.includes(d.po);
 		});
 	}
 

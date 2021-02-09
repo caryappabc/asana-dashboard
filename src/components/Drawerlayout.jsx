@@ -129,6 +129,11 @@ const Drawerlayout = ({ details, year }) => {
 	let dataset = [];
 	details.map((gr) => {
 		gr.map((it) => {
+			let po = it.customfield.find(function (field, index) {
+				if (field.name === "Project Owner") {
+					return field;
+				}
+			});
 			let region = it.customfield.find(function (field, index) {
 				if (field.name === "Region") {
 					return field;
@@ -167,10 +172,12 @@ const Drawerlayout = ({ details, year }) => {
 			let data = {
 				Name: it.name,
 				id: it.gid,
-				assignee:
-					typeof it.assignee === "undefined" || it.assignee === null
+				po:
+					typeof po === "undefined" || po === null
 						? "none"
-						: it.assignee.name,
+						: po.enum_value != null
+						? po.enum_value.name
+						: "none",
 				Request_Type:
 					typeof requesttype === "undefined"
 						? "none"
@@ -234,7 +241,7 @@ const Drawerlayout = ({ details, year }) => {
 	const regionname = [...new Set(fd.map((item) => item.Region))];
 	const monthname = [...new Set(fd.map((item) => item.Handshake_Month))];
 	const resttypelist = [...new Set(fd.map((item) => item.Request_Type))];
-	const POs = [...new Set(fd.map((item) => item.assignee))];
+	const POs = [...new Set(fd.map((item) => item.po))];
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};

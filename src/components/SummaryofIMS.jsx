@@ -31,7 +31,7 @@ const SummaryofIMS = ({ data, region, type, po }) => {
 
 	if (!(po.length === 0)) {
 		data = data.filter((d) => {
-			return po.includes(d.assignee);
+			return po.includes(d.po);
 		});
 	}
 
@@ -57,7 +57,7 @@ const SummaryofIMS = ({ data, region, type, po }) => {
 
 	return (
 		<BarChart
-			width={930}
+			width={1000}
 			height={350}
 			data={plotdata}
 			maxBarSize={80}

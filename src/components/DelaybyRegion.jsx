@@ -56,7 +56,7 @@ const DelaybyRegion = ({ data, type, month, po }) => {
 
 	if (!(po.length === 0)) {
 		delayed = delayed.filter((d) => {
-			return po.includes(d.assignee);
+			return po.includes(d.po);
 		});
 	}
 

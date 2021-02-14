@@ -70,7 +70,7 @@ const ItterationperMonth = ({ data, region }) => {
 	return (
 		<div>
 			<LineChart
-				width={930}
+				width={1100}
 				height={350}
 				data={plotdata}
 				margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

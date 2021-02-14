@@ -35,7 +35,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const DelaybyMonth = ({ data, type, region, po }) => {
+const DelaybyMonth = ({ data, type, region, po, assignee }) => {
 	const classes = useStyles();
 	const [value, setValue] = useState([]);
 
@@ -58,6 +58,11 @@ const DelaybyMonth = ({ data, type, region, po }) => {
 	if (!(po.length === 0)) {
 		delayed = delayed.filter((d) => {
 			return po.includes(d.po);
+		});
+	}
+	if (!(assignee.length === 0)) {
+		delayed = delayed.filter((d) => {
+			return assignee.includes(d.assignee);
 		});
 	}
 
@@ -92,7 +97,7 @@ const DelaybyMonth = ({ data, type, region, po }) => {
 				width={930}
 				height={350}
 				data={plotdata}
-				maxBarSize={60}
+				maxBarSize={40}
 				margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
 			>
 				<CartesianGrid strokeDasharray="3 3" />
@@ -100,7 +105,7 @@ const DelaybyMonth = ({ data, type, region, po }) => {
 				<YAxis />
 				<Tooltip content={plotdata.pName} />
 				<Legend />
-				<Bar dataKey="Num_of_delays" fill="#2B4F69" onClick={handleClick}>
+				<Bar dataKey="Num_of_delays" fill="#003972" onClick={handleClick}>
 					<LabelList dataKey="Num_of_delays" position="top" />
 				</Bar>
 			</BarChart>
@@ -125,7 +130,9 @@ const DelaybyMonth = ({ data, type, region, po }) => {
 							))
 						) : (
 							<TableRow>
-								<TableCell>Select to view Project name</TableCell>
+								<TableCell className={classes.fontcolor}>
+									Select to view Project name
+								</TableCell>
 							</TableRow>
 						)}
 					</TableBody>

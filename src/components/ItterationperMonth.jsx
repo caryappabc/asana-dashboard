@@ -84,6 +84,7 @@ const ItterationperMonth = ({ data, region }) => {
 					type="monotone"
 					dataKey="Total"
 					stroke="#8884d8"
+					strokeWidth="3"
 					activeDot={{
 						onClick: (event, payload) => {
 							if (payload !== undefined) {

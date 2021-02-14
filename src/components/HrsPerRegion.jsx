@@ -10,28 +10,34 @@ import {
 	Legend,
 } from "recharts";
 
-const HrsPerRegion = ({ data, month, type, po }) => {
+const HrsPerRegion = ({ data, month, type, po, assignee }) => {
 	data = data
 		.filter((d) => {
 			return d.Project_status !== "On Hold";
 		})
 		.filter((d) => d.Project_status !== "Cancelled");
 
-	if (!(month.length === 0)) {
+	if (month.length !== 0) {
 		data = data.filter((d) => {
 			return month.includes(d.Handshake_Month);
 		});
 	}
 
-	if (!(type.length === 0)) {
+	if (type.length !== 0) {
 		data = data.filter((d) => {
 			return type.includes(d.Request_Type);
 		});
 	}
 
-	if (!(po.length === 0)) {
+	if (po.length !== 0) {
 		data = data.filter((d) => {
 			return po.includes(d.po);
+		});
+	}
+
+	if (assignee.length !== 0) {
+		data = data.filter((d) => {
+			return assignee.includes(d.assignee);
 		});
 	}
 
@@ -78,6 +84,7 @@ const HrsPerRegion = ({ data, month, type, po }) => {
 			width={930}
 			height={350}
 			data={plotdata}
+			stackOffset="sign"
 			maxBarSize={80}
 			margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
 		>
@@ -86,10 +93,10 @@ const HrsPerRegion = ({ data, month, type, po }) => {
 			<YAxis />
 			<Tooltip />
 			<Legend />
-			<Bar dataKey="hours" stackId="a" fill="#2B4F69">
+			<Bar dataKey="hours" stackId="a" fill="#111244">
 				<LabelList dataKey="hours" position="inside" fill="#FFFFFF" />
 			</Bar>
-			<Bar dataKey="remaining" stackId="a" fill="#FF995B">
+			<Bar dataKey="remaining" stackId="a" fill="#00B6BB">
 				<LabelList dataKey="remaining" position="outside" />
 			</Bar>
 		</BarChart>

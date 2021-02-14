@@ -35,32 +35,37 @@ const useStyles = makeStyles({
 	},
 });
 
-const DelaybyReason = ({ data, type, month, region, po }) => {
+const DelaybyReason = ({ data, type, month, region, po, assignee }) => {
 	const classes = useStyles();
 	const [value, setValue] = useState([]);
 	let delayed = data.filter((d) => {
 		return d.Project_status === "Delay";
 	});
 
-	if (!(type.length === 0)) {
+	if (type.length !== 0) {
 		delayed = delayed.filter((d) => {
 			return type.includes(d.Request_Type);
 		});
 	}
 
-	if (!(month.length === 0)) {
+	if (month.length !== 0) {
 		delayed = delayed.filter((d) => {
 			return month.includes(d.Handshake_Month);
 		});
 	}
-	if (!(region.length === 0)) {
+	if (region.length !== 0) {
 		delayed = delayed.filter((d) => {
 			return region.includes(d.Region);
 		});
 	}
-	if (!(po.length === 0)) {
+	if (po.length !== 0) {
 		delayed = delayed.filter((d) => {
 			return po.includes(d.po);
+		});
+	}
+	if (assignee.length !== 0) {
+		delayed = delayed.filter((d) => {
+			return assignee.includes(d.assignee);
 		});
 	}
 
@@ -94,7 +99,7 @@ const DelaybyReason = ({ data, type, month, region, po }) => {
 				width={930}
 				height={350}
 				data={plotdata}
-				maxBarSize={80}
+				maxBarSize={40}
 				margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
 			>
 				<CartesianGrid strokeDasharray="3 3" />
@@ -102,7 +107,7 @@ const DelaybyReason = ({ data, type, month, region, po }) => {
 				<YAxis />
 				<Tooltip />
 				<Legend />
-				<Bar dataKey="Num_of_delays" fill="#2B4F69" onClick={handleClick}>
+				<Bar dataKey="Num_of_delays" fill="#003972" onClick={handleClick}>
 					<LabelList dataKey="Num_of_delays" position="top" />
 				</Bar>
 			</BarChart>
@@ -127,7 +132,9 @@ const DelaybyReason = ({ data, type, month, region, po }) => {
 							))
 						) : (
 							<TableRow>
-								<TableCell>Select to view Project name</TableCell>
+								<TableCell className={classes.fontcolor}>
+									Select to view Project name
+								</TableCell>
 							</TableRow>
 						)}
 					</TableBody>

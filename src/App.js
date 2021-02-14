@@ -20,18 +20,17 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		padding: theme.spacing(2),
 		textAlign: "center",
-		color: theme.palette.text.secondary,
+		color: "#FFF",
 	},
 	header: {
 		display: "flex",
 		flexDirection: "row",
 		alignItem: "center",
 		justifyContent: "center",
-		color: theme.palette.text.primary,
+		color: "#FFF",
 	},
 	top: {
-		backgroundColor: "#ffffff",
-		backgroundImage: "linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%)",
+		backgroundColor: "#000000",
 		display: "flex",
 		flexDirection: "row",
 		alignItem: "center",
@@ -40,6 +39,18 @@ const useStyles = makeStyles((theme) => ({
 	},
 	year: {
 		marginLeft: "20px",
+	},
+	select: {
+		color: "white",
+		"&:before": {
+			borderColor: "white",
+		},
+		"&:after": {
+			borderColor: "white",
+		},
+	},
+	icon: {
+		fill: "white",
 	},
 }));
 
@@ -80,7 +91,6 @@ const App = () => {
 						console.log(error);
 					})
 			);
-
 			let taskdetails = await Promise.all(tasks).then((result) =>
 				result.map((projects) =>
 					projects.map((taskid) =>
@@ -96,15 +106,16 @@ const App = () => {
 					)
 				)
 			);
-
 			let vals = taskdetails.map(async (tp) => {
 				let val = await Promise.all(tp).then((tpr) => {
 					let dt = tpr.map((tk) => {
 						let details = {
 							gid: tk.gid,
 							name: tk.name,
+							assignee: tk.assignee,
 							completed_on: tk.completed_at,
 							customfield: tk.custom_fields,
+							completed: tk.completed,
 						};
 						return details;
 					});
@@ -112,7 +123,6 @@ const App = () => {
 				});
 				return val;
 			});
-
 			await Promise.all(vals).then((data) => {
 				setTaskDetails(data);
 			});
@@ -133,11 +143,23 @@ const App = () => {
 			{loading === false ? (
 				<div className={classes.root}>
 					<Grid className={classes.top} container spacing={3}>
-						<Grid item xs className={classes.header}>
+						<Grid item xs={12} className={classes.header}>
 							<Typography variant="h3">IMS Dashboard - Asana</Typography>
 							<FormControl className={classes.year}>
-								<InputLabel>Year</InputLabel>
-								<Select value={year} onChange={handleChange}>
+								<InputLabel
+									id="demo-mutiple-name-label-year"
+									style={{ color: "white" }}
+								>
+									Year
+								</InputLabel>
+								<Select
+									labelId="demo-mutiple-name-label-year"
+									id="demo-mutiple-name-year"
+									className={classes.select}
+									inputProps={{ classes: { icon: classes.icon } }}
+									value={year}
+									onChange={handleChange}
+								>
 									{yearsList.map((y) => (
 										<MenuItem key={y} value={y}>
 											{y}
@@ -146,7 +168,7 @@ const App = () => {
 								</Select>
 							</FormControl>
 						</Grid>
-						<Grid item xs>
+						<Grid item xs={12}>
 							<Drawerlayout details={taskDetails} year={year} />
 						</Grid>
 					</Grid>

@@ -10,25 +10,36 @@ import {
 	Legend,
 } from "recharts";
 
-const TotalRequest = ({ data, type, region, po }) => {
-	if (!(type.length === 0)) {
+const TotalRequest = ({ data, type, region, po, assignee, copy }) => {
+	if (type.length !== 0) {
 		data = data.filter((d) => {
 			return type.includes(d.Request_Type);
 		});
 	}
 
-	if (!(region.length === 0)) {
+	if (region.length !== 0) {
 		data = data.filter((d) => {
 			return region.includes(d.Region);
 		});
 	}
 
-	if (!(po.length === 0)) {
+	if (po.length !== 0) {
 		data = data.filter((d) => {
 			return po.includes(d.po);
 		});
 	}
 
+	if (assignee.length !== 0) {
+		data = data.filter((d) => {
+			return assignee.includes(d.assignee);
+		});
+	}
+
+	if (copy.length !== 0) {
+		data = data.filter((d) => {
+			return copy.includes(d.copy);
+		});
+	}
 	let databymonths = data.reduce((r, a) => {
 		r[a.Handshake_Month] = [...(r[a.Handshake_Month] || []), a];
 		return r;
@@ -55,7 +66,7 @@ const TotalRequest = ({ data, type, region, po }) => {
 			<YAxis />
 			<Tooltip />
 			<Legend />
-			<Line type="monotone" dataKey="numofreq" stroke="#8884d8" strokeWidth="2">
+			<Line type="monotone" dataKey="numofreq" stroke="#8884d8" strokeWidth="3">
 				<LabelList dataKey="numofreq" position="top" />
 			</Line>
 		</LineChart>

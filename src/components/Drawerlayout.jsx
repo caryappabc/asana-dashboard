@@ -11,23 +11,31 @@ import TotalRequest from "./TotalRequest";
 import DelaybyMonth from "./DelaybyMonth";
 import DelaybyRegion from "./DelaybyRegion";
 import DelaybyReason from "./DelaybyReason";
+import ProjectDetails from "./ProjectDetails";
+import OpenProjects from "./OpenProjects";
+import ProjectType from "./ProjectType";
 import ItterationperMonth from "./ItterationperMonth";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 const AntTabs = withStyles({
 	root: {
 		borderBottom: "1px solid #e8e8e8",
+		display: "flex",
+		flexFlow: "row wrap",
 	},
 })(Tabs);
 
 const AntTab = withStyles((theme) => ({
 	root: {
-		color: "black",
+		color: "#FFF",
+		flex: 1,
 		textTransform: "none",
 		minWidth: 72,
 		fontWeight: 400,
-		fontSize: 17,
-		marginRight: theme.spacing(4),
+		fontSize: 16,
+		marginRight: theme.spacing(3),
+		marginLeft: theme.spacing(3),
 		fontFamily: [
 			"-apple-system",
 			"BlinkMacSystemFont",
@@ -45,11 +53,7 @@ const AntTab = withStyles((theme) => ({
 			opacity: 1,
 		},
 		"&$selected": {
-			color: "black",
-			fontWeight: 600,
-		},
-		"&:focus": {
-			color: "black",
+			fontWeight: 900,
 		},
 	},
 	selected: {},
@@ -92,6 +96,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
+		color: "#FFF",
 	},
 	padding: {
 		padding: theme.spacing(3),
@@ -100,6 +105,18 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(1),
 		minWidth: 120,
 		maxWidth: 300,
+	},
+	select: {
+		color: "white",
+		"&:before": {
+			borderColor: "white",
+		},
+		"&:after": {
+			borderColor: "white",
+		},
+	},
+	icon: {
+		fill: "white",
 	},
 }));
 
@@ -110,6 +127,9 @@ const Drawerlayout = ({ details, year }) => {
 	const [month, setMonth] = useState([]);
 	const [reqtype, setReqType] = useState([]);
 	const [po, setPO] = useState([]);
+	const [assignee, setAssignee] = useState([]);
+	const [art, setArt] = useState([]);
+	const [copy, setCopy] = useState([]);
 
 	let Mname = [
 		"January",
@@ -131,6 +151,21 @@ const Drawerlayout = ({ details, year }) => {
 		gr.map((it) => {
 			let po = it.customfield.find(function (field, index) {
 				if (field.name === "Project Owner") {
+					return field;
+				}
+			});
+			let art1 = it.customfield.find(function (field, index) {
+				if (field.name === "Art 1") {
+					return field;
+				}
+			});
+			let art2 = it.customfield.find(function (field, index) {
+				if (field.name === "Art 2") {
+					return field;
+				}
+			});
+			let copy = it.customfield.find(function (field, index) {
+				if (field.name === "Copywriter") {
 					return field;
 				}
 			});
@@ -169,14 +204,53 @@ const Drawerlayout = ({ details, year }) => {
 					return field;
 				}
 			});
+			let getart = (art1, atr2) => {
+				let artT = [];
+				let ar1 =
+					typeof art1 === "undefined" || po === null
+						? "none"
+						: art1.enum_value != null
+						? art1.enum_value.name
+						: "none";
+				let ar2 =
+					typeof art1 === "undefined" || po === null
+						? "none"
+						: art2.enum_value != null
+						? art2.enum_value.name
+						: "none";
+				if (ar1 === "none" && art2 === "none") {
+					artT.push("none");
+				} else if (ar1 === "none") {
+					artT.push(ar2);
+				} else if (ar2 === "none") {
+					artT.push(ar1);
+				} else {
+					artT.push(ar1, ar2);
+				}
+				return artT;
+			};
 			let data = {
 				Name: it.name,
 				id: it.gid,
+				"open/closed": it.completed ? "closed" : "open",
+				assignee:
+					typeof it.assignee === "undefined" || it.assignee === null
+						? "none"
+						: it.assignee != null
+						? it.assignee.name
+						: "none",
 				po:
 					typeof po === "undefined" || po === null
 						? "none"
 						: po.enum_value != null
 						? po.enum_value.name
+						: "none",
+				art: getart(art1, art2),
+				copy:
+					typeof copy === "undefined" || copy === null
+						? "none"
+						: copy.enum_value != null
+						? copy.enum_value.name
 						: "none",
 				Request_Type:
 					typeof requesttype === "undefined"
@@ -242,6 +316,12 @@ const Drawerlayout = ({ details, year }) => {
 	const monthname = [...new Set(fd.map((item) => item.Handshake_Month))];
 	const resttypelist = [...new Set(fd.map((item) => item.Request_Type))];
 	const POs = [...new Set(fd.map((item) => item.po))];
+	const artTeam = [
+		...new Set(
+			Array.prototype.concat.apply([], [...new Set(fd.map((item) => item.art))])
+		),
+	];
+	const copyTeam = [...new Set(fd.map((item) => item.copy))];
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -249,7 +329,6 @@ const Drawerlayout = ({ details, year }) => {
 	const handleRegionChange = (event) => {
 		setRegion(event.target.value);
 	};
-
 	const handleMonthChange = (event) => {
 		setMonth(event.target.value);
 	};
@@ -260,15 +339,26 @@ const Drawerlayout = ({ details, year }) => {
 	const handlePOChange = (event) => {
 		setPO(event.target.value);
 	};
+	const handleArtChange = (event) => {
+		setArt(event.target.value);
+	};
+	const handleCopyChange = (event) => {
+		setCopy(event.target.value);
+	};
 
 	return (
 		<div className={classes.root}>
 			<FormControl className={classes.formControl}>
-				<InputLabel id="demo-mutiple-name-label">Region</InputLabel>
+				<InputLabel id="demo-mutiple-name-label" style={{ color: "white" }}>
+					Region
+				</InputLabel>
 				<Select
 					labelId="demo-mutiple-name-label"
 					id="demo-mutiple-name"
 					multiple
+					className={classes.select}
+					inputProps={{ classes: { icon: classes.icon } }}
+					disabled={[4, 5, 6].includes(value) ? true : false}
 					value={reg}
 					onChange={handleRegionChange}
 				>
@@ -280,11 +370,16 @@ const Drawerlayout = ({ details, year }) => {
 				</Select>
 			</FormControl>
 			<FormControl className={classes.formControl}>
-				<InputLabel id="demo-mutiple-name-label">Month</InputLabel>
+				<InputLabel id="demo-mutiple-name-label1" style={{ color: "white" }}>
+					Month
+				</InputLabel>
 				<Select
-					labelId="demo-mutiple-name-label"
+					labelId="demo-mutiple-name-label1"
 					id="demo-mutiple-name"
 					multiple
+					className={classes.select}
+					inputProps={{ classes: { icon: classes.icon } }}
+					disabled={[1, 3, 4].includes(value) ? true : false}
 					value={month}
 					onChange={handleMonthChange}
 				>
@@ -296,11 +391,16 @@ const Drawerlayout = ({ details, year }) => {
 				</Select>
 			</FormControl>
 			<FormControl className={classes.formControl}>
-				<InputLabel id="demo-mutiple-name-label">Request Type</InputLabel>
+				<InputLabel id="demo-mutiple-name-label2" style={{ color: "white" }}>
+					Request Type
+				</InputLabel>
 				<Select
-					labelId="demo-mutiple-name-label"
+					labelId="demo-mutiple-name-label2"
 					id="demo-mutiple-name"
 					multiple
+					className={classes.select}
+					inputProps={{ classes: { icon: classes.icon } }}
+					disabled={[3, 5, 6].includes(value) ? true : false}
 					value={reqtype}
 					onChange={handleRequestChange}
 				>
@@ -312,15 +412,62 @@ const Drawerlayout = ({ details, year }) => {
 				</Select>
 			</FormControl>
 			<FormControl className={classes.formControl}>
-				<InputLabel id="demo-mutiple-name-label">PO</InputLabel>
+				<InputLabel id="demo-mutiple-name-label3" style={{ color: "white" }}>
+					PO
+				</InputLabel>
 				<Select
-					labelId="demo-mutiple-name-label"
+					labelId="demo-mutiple-name-label3"
 					id="demo-mutiple-name"
 					multiple
+					className={classes.select}
+					inputProps={{ classes: { icon: classes.icon } }}
+					disabled={[3, 5, 6].includes(value) ? true : false}
 					value={po}
 					onChange={handlePOChange}
 				>
 					{POs.map((name) => (
+						<MenuItem key={name} value={name}>
+							{name}
+						</MenuItem>
+					))}
+				</Select>
+			</FormControl>
+			<FormControl className={classes.formControl}>
+				<InputLabel id="demo-mutiple-name-label4" style={{ color: "white" }}>
+					Art
+				</InputLabel>
+				<Select
+					labelId="demo-mutiple-name-label4"
+					id="demo-mutiple-name"
+					multiple
+					disabled
+					className={classes.select}
+					inputProps={{ classes: { icon: classes.icon } }}
+					value={art}
+					onChange={handleArtChange}
+				>
+					{artTeam.map((name) => (
+						<MenuItem key={name} value={name}>
+							{name}
+						</MenuItem>
+					))}
+				</Select>
+			</FormControl>
+			<FormControl className={classes.formControl}>
+				<InputLabel id="demo-mutiple-name-label5" style={{ color: "white" }}>
+					Copy
+				</InputLabel>
+				<Select
+					labelId="demo-mutiple-name-label5"
+					id="demo-mutiple-name"
+					multiple
+					className={classes.select}
+					inputProps={{ classes: { icon: classes.icon } }}
+					disabled={[0, 2, 3, 4, 5, 6].includes(value) ? true : false}
+					value={copy}
+					onChange={handleCopyChange}
+				>
+					{copyTeam.map((name) => (
 						<MenuItem key={name} value={name}>
 							{name}
 						</MenuItem>
@@ -338,11 +485,21 @@ const Drawerlayout = ({ details, year }) => {
 				<AntTab label="No of Requests" {...a11yProps(1)} />
 				<AntTab label="Delay Summary" {...a11yProps(2)} />
 				<AntTab label="Iterations" {...a11yProps(3)} />
+				<AntTab label="Project Details" {...a11yProps(4)} />
+				<AntTab label="Open Projects" {...a11yProps(5)} />
+				<AntTab label="Project Type Summary" {...a11yProps(6)} />
 			</AntTabs>
+
 			<TabPanel value={value} index={0}>
 				<Card className="container">
 					<CardContent>
-						<SummaryofIMS data={fd} region={reg} type={reqtype} po={po} />
+						<SummaryofIMS
+							data={fd}
+							region={reg}
+							type={reqtype}
+							po={po}
+							assignee={assignee}
+						/>
 						<Typography variant="h5">
 							Set Hours / Remaining Time per Month
 						</Typography>
@@ -350,7 +507,13 @@ const Drawerlayout = ({ details, year }) => {
 				</Card>
 				<Card className="container">
 					<CardContent>
-						<HrsPerRegion data={fd} month={month} type={reqtype} po={po} />
+						<HrsPerRegion
+							data={fd}
+							month={month}
+							type={reqtype}
+							po={po}
+							assignee={assignee}
+						/>
 						<Typography variant="h5">
 							Set Hours / Remaining Time per Region
 						</Typography>
@@ -360,7 +523,14 @@ const Drawerlayout = ({ details, year }) => {
 			<TabPanel value={value} index={1}>
 				<Card className="container">
 					<CardContent>
-						<TotalRequest data={fd} region={reg} type={reqtype} po={po} />
+						<TotalRequest
+							data={fd}
+							region={reg}
+							type={reqtype}
+							po={po}
+							copy={copy}
+							assignee={assignee}
+						/>
 						<Typography variant="h5">Total Num Request per Month</Typography>
 					</CardContent>
 				</Card>
@@ -368,13 +538,25 @@ const Drawerlayout = ({ details, year }) => {
 			<TabPanel value={value} index={2}>
 				<Card className="container">
 					<CardContent>
-						<DelaybyMonth data={fd} region={reg} type={reqtype} po={po} />
+						<DelaybyMonth
+							data={fd}
+							region={reg}
+							type={reqtype}
+							po={po}
+							assignee={assignee}
+						/>
 						<Typography variant="h5">Delay per Month</Typography>
 					</CardContent>
 				</Card>
 				<Card className="container">
 					<CardContent>
-						<DelaybyRegion data={fd} month={month} type={reqtype} po={po} />
+						<DelaybyRegion
+							data={fd}
+							month={month}
+							type={reqtype}
+							po={po}
+							assignee={assignee}
+						/>
 						<Typography variant="h5">Delay per Region</Typography>
 					</CardContent>
 				</Card>
@@ -386,6 +568,7 @@ const Drawerlayout = ({ details, year }) => {
 							month={month}
 							type={reqtype}
 							po={po}
+							assignee={assignee}
 						/>
 						<Typography variant="h5">Delay per Reason</Typography>
 					</CardContent>
@@ -398,6 +581,27 @@ const Drawerlayout = ({ details, year }) => {
 						<Typography className={classes.padding} variant="h5">
 							No of Projects with Iteration above 2
 						</Typography>
+					</CardContent>
+				</Card>
+			</TabPanel>
+			<TabPanel value={value} index={4}>
+				<Card className="container">
+					<CardContent>
+						<ProjectDetails data={fd} po={po} type={reqtype} />
+					</CardContent>
+				</Card>
+			</TabPanel>
+			<TabPanel value={value} index={5}>
+				<Card className="container">
+					<CardContent>
+						<OpenProjects data={fd} month={month} />
+					</CardContent>
+				</Card>
+			</TabPanel>
+			<TabPanel value={value} index={6}>
+				<Card className="container">
+					<CardContent>
+						<ProjectType data={fd} month={month} />
 					</CardContent>
 				</Card>
 			</TabPanel>

@@ -135,7 +135,7 @@ const ProjectDetails = ({ data, po, type }) => {
 				<Table className={classes.table} aria-label="simple table">
 					<TableHead className={classes.tableHeader}>
 						<TableRow>
-							<TableCell className={classes.fontcolor} width="450px">
+							<TableCell className={classes.fontcolor} width="200px">
 								<Typography className={classes.bold} varient="h1">
 									{`Projects - Total of ${data.length}`}
 								</Typography>
@@ -143,13 +143,16 @@ const ProjectDetails = ({ data, po, type }) => {
 							<TableCell className={classes.fontcolor} width="100px">
 								PO
 							</TableCell>
-							<TableCell className={classes.fontcolor} width="100px">
+							<TableCell className={classes.fontcolor} width="50px">
 								Art
 							</TableCell>
-							<TableCell className={classes.fontcolor} width="50px">
+							<TableCell className={classes.fontcolor} width="30px">
 								Copy
 							</TableCell>
 							<TableCell className={classes.fontcolor} width="50px">
+								Stage
+							</TableCell>
+							<TableCell className={classes.fontcolor} width="20px">
 								Status
 							</TableCell>
 						</TableRow>
@@ -166,6 +169,9 @@ const ProjectDetails = ({ data, po, type }) => {
 									{pr.art[0]} {pr.art[1]}{" "}
 								</TableCell>
 								<TableCell className={classes.fontcolor}>{pr.copy} </TableCell>
+								<TableCell className={classes.fontcolor}>
+									{pr.section}
+								</TableCell>
 								<TableCell className={classes.fontcolor}>
 									{pr["open/closed"]}
 								</TableCell>

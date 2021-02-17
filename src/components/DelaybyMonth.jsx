@@ -105,7 +105,12 @@ const DelaybyMonth = ({ data, type, region, po, assignee }) => {
 				<YAxis />
 				<Tooltip content={plotdata.pName} />
 				<Legend />
-				<Bar dataKey="Num_of_delays" fill="#003972" onClick={handleClick}>
+				<Bar
+					name="No of Delayed Projects"
+					dataKey="Num_of_delays"
+					fill="#003972"
+					onClick={handleClick}
+				>
 					<LabelList dataKey="Num_of_delays" position="top" />
 				</Bar>
 			</BarChart>

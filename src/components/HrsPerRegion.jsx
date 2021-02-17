@@ -93,10 +93,15 @@ const HrsPerRegion = ({ data, month, type, po, assignee }) => {
 			<YAxis />
 			<Tooltip />
 			<Legend />
-			<Bar dataKey="hours" stackId="a" fill="#111244">
+			<Bar dataKey="hours" stackId="a" name="Consumed Hours" fill="#111244">
 				<LabelList dataKey="hours" position="inside" fill="#FFFFFF" />
 			</Bar>
-			<Bar dataKey="remaining" stackId="a" fill="#00B6BB">
+			<Bar
+				dataKey="remaining"
+				stackId="a"
+				name="Remaining Hours"
+				fill="#00B6BB"
+			>
 				<LabelList dataKey="remaining" position="outside" />
 			</Bar>
 		</BarChart>

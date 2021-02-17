@@ -109,6 +109,13 @@ const App = () => {
 			let vals = taskdetails.map(async (tp) => {
 				let val = await Promise.all(tp).then((tpr) => {
 					let dt = tpr.map((tk) => {
+						let section = tk.memberships.map((mr) => {
+							if (projectids.includes(mr.project.gid)) {
+								if (typeof mr.section !== undefined) {
+									return mr.section.name;
+								}
+							}
+						});
 						let details = {
 							gid: tk.gid,
 							name: tk.name,
@@ -116,6 +123,7 @@ const App = () => {
 							completed_on: tk.completed_at,
 							customfield: tk.custom_fields,
 							completed: tk.completed,
+							section: section,
 						};
 						return details;
 					});

@@ -58,38 +58,38 @@ const ItterationperMonth = ({ data, region }) => {
 	for (const month in databymonths) {
 		const count = Object.keys(databymonths[month]).length;
 		const projects_names = databymonths[month].map((d) => {
-			return d.Name;
+			return { name: d.Name, po: d.po };
 		});
 		plotdata.push({
-			name: projects_names,
+			projectde: projects_names,
 			month: month,
 			Total: count,
 		});
 	}
-
 	return (
 		<div>
 			<LineChart
-				width={1100}
+				width={1000}
 				height={350}
 				data={plotdata}
 				margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
 			>
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey="month" />
+				<XAxis padding={{ left: 20, right: 20 }} />
 				<YAxis />
 				<Tooltip />
 				<Legend />
 				<Line
-					type="monotone"
+					type="natural"
+					name="Num of projects "
 					dataKey="Total"
 					stroke="#8884d8"
-					strokeWidth="3"
+					strokeWidth={3}
 					activeDot={{
 						onClick: (event, payload) => {
 							if (payload !== undefined) {
 								setValue(payload.payload);
-								setProjects(payload.payload.name);
+								setProjects(payload.payload.projectde);
 							}
 						},
 					}}
@@ -102,17 +102,23 @@ const ItterationperMonth = ({ data, region }) => {
 				<Table className={classes.table} aria-label="simple table">
 					<TableHead>
 						<TableRow>
-							<TableCell className={classes.fontcolor}>
+							<TableCell className={classes.fontcolor} width="400">
 								<Typography className={classes.bold} varient="h1">
 									Projects in {value.month}
+								</Typography>
+							</TableCell>
+							<TableCell className={classes.fontcolor} width="100">
+								<Typography className={classes.bold} varient="h1">
+									PO
 								</Typography>
 							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{projects.map((name) => (
-							<TableRow key={name}>
-								<TableCell className={classes.fontcolor}>{name}</TableCell>
+						{projects.map((p) => (
+							<TableRow key={projects.indexOf(p)}>
+								<TableCell className={classes.fontcolor}>{p.name}</TableCell>
+								<TableCell className={classes.fontcolor}>{p.po}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

@@ -20,7 +20,6 @@ import Grid from "@material-ui/core/Grid";
 
 const AntTabs = withStyles({
 	root: {
-		borderBottom: "1px solid #e8e8e8",
 		display: "flex",
 		flexFlow: "row wrap",
 	},
@@ -233,6 +232,9 @@ const Drawerlayout = ({ details, year }) => {
 				Name: it.name,
 				id: it.gid,
 				"open/closed": it.completed ? "closed" : "open",
+				section: it.section.filter(function (element) {
+					return element !== undefined;
+				}),
 				assignee:
 					typeof it.assignee === "undefined" || it.assignee === null
 						? "none"
@@ -485,9 +487,9 @@ const Drawerlayout = ({ details, year }) => {
 				<AntTab label="No of Requests" {...a11yProps(1)} />
 				<AntTab label="Delay Summary" {...a11yProps(2)} />
 				<AntTab label="Iterations" {...a11yProps(3)} />
-				<AntTab label="Project Details" {...a11yProps(4)} />
-				<AntTab label="Open Projects" {...a11yProps(5)} />
-				<AntTab label="Project Type Summary" {...a11yProps(6)} />
+				<AntTab label="Open Projects" {...a11yProps(4)} />
+				<AntTab label="Project Type Summary" {...a11yProps(5)} />
+				<AntTab label="Project Details" {...a11yProps(6)} />
 			</AntTabs>
 
 			<TabPanel value={value} index={0}>
@@ -587,21 +589,21 @@ const Drawerlayout = ({ details, year }) => {
 			<TabPanel value={value} index={4}>
 				<Card className="container">
 					<CardContent>
-						<ProjectDetails data={fd} po={po} type={reqtype} />
+						<OpenProjects data={fd} month={month} />
 					</CardContent>
 				</Card>
 			</TabPanel>
 			<TabPanel value={value} index={5}>
 				<Card className="container">
 					<CardContent>
-						<OpenProjects data={fd} month={month} />
+						<ProjectType data={fd} month={month} />
 					</CardContent>
 				</Card>
 			</TabPanel>
 			<TabPanel value={value} index={6}>
 				<Card className="container">
 					<CardContent>
-						<ProjectType data={fd} month={month} />
+						<ProjectDetails data={fd} po={po} type={reqtype} />
 					</CardContent>
 				</Card>
 			</TabPanel>

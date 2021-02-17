@@ -75,10 +75,15 @@ const SummaryofIMS = ({ data, region, type, po, assignee }) => {
 			<YAxis />
 			<Tooltip />
 			<Legend />
-			<Bar dataKey="hours" stackId="a" fill="#111244">
+			<Bar dataKey="hours" name="Consumed Hours" stackId="a" fill="#111244">
 				<LabelList dataKey="hours" position="inside" fill="#FFFFFF" />
 			</Bar>
-			<Bar dataKey="remaining" stackId="a" fill="#00B6BB">
+			<Bar
+				dataKey="remaining"
+				name="Remaining Hours"
+				stackId="a"
+				fill="#00B6BB"
+			>
 				<LabelList dataKey="remaining" position="outside" />
 			</Bar>
 		</BarChart>

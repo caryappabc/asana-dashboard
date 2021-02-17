@@ -31,10 +31,13 @@ const OpenProjects = ({ data, month }) => {
 		r[a.copy] = [...(r[a.copy] || []), a];
 		return r;
 	}, {});
+
 	let databyart = data.reduce((r, a) => {
 		r[a.art] = [...(r[a.art] || []), a];
 		return r;
 	}, {});
+
+	console.log(databyart);
 
 	let plotdata = [];
 	for (const po in databypo) {
@@ -56,9 +59,9 @@ const OpenProjects = ({ data, month }) => {
 
 	let plotdata3 = [];
 	for (const art in databyart) {
-		let artname = art.split(" ", 2);
+		let artname = art.split(",", 2);
 		plotdata3.push({
-			art: artname[0],
+			art: art,
 			no_open_projects: databyart[art].length,
 		});
 	}
@@ -78,7 +81,11 @@ const OpenProjects = ({ data, month }) => {
 				<YAxis type="category" dataKey="po" />
 				<Tooltip />
 				<Legend />
-				<Bar dataKey="no_open_projects" fill="#2B4F69">
+				<Bar
+					dataKey="no_open_projects"
+					name="No of Open projects"
+					fill="#2B4F69"
+				>
 					<LabelList
 						dataKey="no_open_projects"
 						position="inside"
@@ -100,7 +107,11 @@ const OpenProjects = ({ data, month }) => {
 				<YAxis type="category" dataKey="copy" />
 				<Tooltip />
 				<Legend />
-				<Bar dataKey="no_open_projects" fill="#654153">
+				<Bar
+					dataKey="no_open_projects"
+					name="No of Open projects"
+					fill="#654153"
+				>
 					<LabelList
 						dataKey="no_open_projects"
 						position="inside"
@@ -122,7 +133,11 @@ const OpenProjects = ({ data, month }) => {
 				<YAxis type="category" dataKey="art" />
 				<Tooltip />
 				<Legend />
-				<Bar dataKey="no_open_projects" fill="#23857A">
+				<Bar
+					dataKey="no_open_projects"
+					name="No of Open projects"
+					fill="#23857A"
+				>
 					<LabelList
 						dataKey="no_open_projects"
 						position="inside"

@@ -60,11 +60,6 @@ const DelaybyMonth = ({ data, type, region, po, assignee }) => {
 			return po.includes(d.po);
 		});
 	}
-	if (!(assignee.length === 0)) {
-		delayed = delayed.filter((d) => {
-			return assignee.includes(d.assignee);
-		});
-	}
 
 	let delaybymonth = delayed.reduce((r, a) => {
 		r[a.Handshake_Month] = [...(r[a.Handshake_Month] || []), a];

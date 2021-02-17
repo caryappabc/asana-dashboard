@@ -103,7 +103,7 @@ function TablePaginationActions(props) {
 	);
 }
 
-const ProjectDetails = ({ data, po, type }) => {
+const ProjectDetails = ({ data, po, type, month, region }) => {
 	const classes = useStyles();
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -126,6 +126,18 @@ const ProjectDetails = ({ data, po, type }) => {
 	if (type.length !== 0) {
 		data = data.filter((d) => {
 			return type.includes(d.Request_Type);
+		});
+	}
+
+	if (region.length !== 0) {
+		data = data.filter((d) => {
+			return region.includes(d.Region);
+		});
+	}
+
+	if (month.length !== 0) {
+		data = data.filter((d) => {
+			return month.includes(d.Handshake_Month);
 		});
 	}
 

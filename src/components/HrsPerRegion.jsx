@@ -35,12 +35,6 @@ const HrsPerRegion = ({ data, month, type, po, assignee }) => {
 		});
 	}
 
-	if (assignee.length !== 0) {
-		data = data.filter((d) => {
-			return assignee.includes(d.assignee);
-		});
-	}
-
 	let databyregion = data.reduce((r, a) => {
 		r[a.Region] = [...(r[a.Region] || []), a];
 		return r;

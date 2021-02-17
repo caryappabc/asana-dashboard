@@ -29,12 +29,6 @@ const TotalRequest = ({ data, type, region, po, assignee, copy }) => {
 		});
 	}
 
-	if (assignee.length !== 0) {
-		data = data.filter((d) => {
-			return assignee.includes(d.assignee);
-		});
-	}
-
 	if (copy.length !== 0) {
 		data = data.filter((d) => {
 			return copy.includes(d.copy);

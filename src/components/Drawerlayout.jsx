@@ -16,7 +16,6 @@ import OpenProjects from "./OpenProjects";
 import ProjectType from "./ProjectType";
 import ItterationperMonth from "./ItterationperMonth";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 
 const AntTabs = withStyles({
 	root: {
@@ -126,7 +125,6 @@ const Drawerlayout = ({ details, year }) => {
 	const [month, setMonth] = useState([]);
 	const [reqtype, setReqType] = useState([]);
 	const [po, setPO] = useState([]);
-	const [assignee, setAssignee] = useState([]);
 	const [art, setArt] = useState([]);
 	const [copy, setCopy] = useState([]);
 
@@ -360,7 +358,7 @@ const Drawerlayout = ({ details, year }) => {
 					multiple
 					className={classes.select}
 					inputProps={{ classes: { icon: classes.icon } }}
-					disabled={[4, 5, 6].includes(value) ? true : false}
+					disabled={[4, 5].includes(value) ? true : false}
 					value={reg}
 					onChange={handleRegionChange}
 				>
@@ -381,7 +379,7 @@ const Drawerlayout = ({ details, year }) => {
 					multiple
 					className={classes.select}
 					inputProps={{ classes: { icon: classes.icon } }}
-					disabled={[1, 3, 6].includes(value) ? true : false}
+					disabled={[1, 3].includes(value) ? true : false}
 					value={month}
 					onChange={handleMonthChange}
 				>
@@ -495,13 +493,7 @@ const Drawerlayout = ({ details, year }) => {
 			<TabPanel value={value} index={0}>
 				<Card className="container">
 					<CardContent>
-						<SummaryofIMS
-							data={fd}
-							region={reg}
-							type={reqtype}
-							po={po}
-							assignee={assignee}
-						/>
+						<SummaryofIMS data={fd} region={reg} type={reqtype} po={po} />
 						<Typography variant="h5">
 							Set Hours / Remaining Time per Month
 						</Typography>
@@ -509,13 +501,7 @@ const Drawerlayout = ({ details, year }) => {
 				</Card>
 				<Card className="container">
 					<CardContent>
-						<HrsPerRegion
-							data={fd}
-							month={month}
-							type={reqtype}
-							po={po}
-							assignee={assignee}
-						/>
+						<HrsPerRegion data={fd} month={month} type={reqtype} po={po} />
 						<Typography variant="h5">
 							Set Hours / Remaining Time per Region
 						</Typography>
@@ -531,7 +517,6 @@ const Drawerlayout = ({ details, year }) => {
 							type={reqtype}
 							po={po}
 							copy={copy}
-							assignee={assignee}
 						/>
 						<Typography variant="h5">Total Num Request per Month</Typography>
 					</CardContent>
@@ -540,25 +525,13 @@ const Drawerlayout = ({ details, year }) => {
 			<TabPanel value={value} index={2}>
 				<Card className="container">
 					<CardContent>
-						<DelaybyMonth
-							data={fd}
-							region={reg}
-							type={reqtype}
-							po={po}
-							assignee={assignee}
-						/>
+						<DelaybyMonth data={fd} region={reg} type={reqtype} po={po} />
 						<Typography variant="h5">Delay per Month</Typography>
 					</CardContent>
 				</Card>
 				<Card className="container">
 					<CardContent>
-						<DelaybyRegion
-							data={fd}
-							month={month}
-							type={reqtype}
-							po={po}
-							assignee={assignee}
-						/>
+						<DelaybyRegion data={fd} month={month} type={reqtype} po={po} />
 						<Typography variant="h5">Delay per Region</Typography>
 					</CardContent>
 				</Card>
@@ -570,7 +543,6 @@ const Drawerlayout = ({ details, year }) => {
 							month={month}
 							type={reqtype}
 							po={po}
-							assignee={assignee}
 						/>
 						<Typography variant="h5">Delay per Reason</Typography>
 					</CardContent>
@@ -603,7 +575,13 @@ const Drawerlayout = ({ details, year }) => {
 			<TabPanel value={value} index={6}>
 				<Card className="container">
 					<CardContent>
-						<ProjectDetails data={fd} po={po} type={reqtype} />
+						<ProjectDetails
+							data={fd}
+							po={po}
+							type={reqtype}
+							region={reg}
+							month={month}
+						/>
 					</CardContent>
 				</Card>
 			</TabPanel>

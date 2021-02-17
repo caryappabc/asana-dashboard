@@ -60,12 +60,6 @@ const DelaybyRegion = ({ data, type, month, po, assignee }) => {
 		});
 	}
 
-	if (assignee.length !== 0) {
-		delayed = delayed.filter((d) => {
-			return assignee.includes(d.assignee);
-		});
-	}
-
 	let delaybyregion = delayed.reduce((r, a) => {
 		r[a.Region] = [...(r[a.Region] || []), a];
 		return r;

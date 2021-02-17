@@ -35,12 +35,6 @@ const SummaryofIMS = ({ data, region, type, po, assignee }) => {
 		});
 	}
 
-	if (assignee.length !== 0) {
-		data = data.filter((d) => {
-			return assignee.includes(d.assignee);
-		});
-	}
-
 	let databymonths = data.reduce((r, a) => {
 		r[a.Handshake_Month] = [...(r[a.Handshake_Month] || []), a];
 		return r;

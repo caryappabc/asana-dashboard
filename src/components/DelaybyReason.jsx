@@ -63,11 +63,6 @@ const DelaybyReason = ({ data, type, month, region, po, assignee }) => {
 			return po.includes(d.po);
 		});
 	}
-	if (assignee.length !== 0) {
-		delayed = delayed.filter((d) => {
-			return assignee.includes(d.assignee);
-		});
-	}
 
 	let delaybyreason = delayed.reduce((r, a) => {
 		r[a.Reason_for_delay] = [...(r[a.Reason_for_delay] || []), a];

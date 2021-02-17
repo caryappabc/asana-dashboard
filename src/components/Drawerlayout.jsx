@@ -381,7 +381,7 @@ const Drawerlayout = ({ details, year }) => {
 					multiple
 					className={classes.select}
 					inputProps={{ classes: { icon: classes.icon } }}
-					disabled={[1, 3, 4].includes(value) ? true : false}
+					disabled={[1, 3, 6].includes(value) ? true : false}
 					value={month}
 					onChange={handleMonthChange}
 				>
@@ -402,7 +402,7 @@ const Drawerlayout = ({ details, year }) => {
 					multiple
 					className={classes.select}
 					inputProps={{ classes: { icon: classes.icon } }}
-					disabled={[3, 5, 6].includes(value) ? true : false}
+					disabled={[3, 5, 4].includes(value) ? true : false}
 					value={reqtype}
 					onChange={handleRequestChange}
 				>
@@ -423,7 +423,7 @@ const Drawerlayout = ({ details, year }) => {
 					multiple
 					className={classes.select}
 					inputProps={{ classes: { icon: classes.icon } }}
-					disabled={[3, 5, 6].includes(value) ? true : false}
+					disabled={[3, 5, 4].includes(value) ? true : false}
 					value={po}
 					onChange={handlePOChange}
 				>

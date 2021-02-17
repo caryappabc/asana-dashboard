@@ -33,11 +33,40 @@ const OpenProjects = ({ data, month }) => {
 	}, {});
 
 	let databyart = data.reduce((r, a) => {
-		r[a.art] = [...(r[a.art] || []), a];
+		if (a.art.length === 1) {
+			r[a.art] = [...(r[a.art] || []), a];
+		}
 		return r;
 	}, {});
 
-	console.log(databyart);
+	let databyart2 = data.reduce((r, a) => {
+		if (a.art.length !== 1) {
+			r[a.art] = [...(r[a.art] || []), a];
+		}
+		return r;
+	}, {});
+
+	let plotdata3 = [];
+	for (const art in databyart) {
+		plotdata3.push({
+			art: art,
+			no_open_projects: databyart[art].length,
+		});
+	}
+
+	for (const art in databyart2) {
+		let ar = art.split(",");
+		let newValue = databyart2[art].length / 2;
+		ar.forEach(function (a) {
+			plotdata3.find(function (item, index) {
+				if (item.art === a) {
+					item.no_open_projects = item.no_open_projects + newValue;
+				}
+			});
+			const found = plotdata3.some((el) => el.art === a);
+			if (!found) plotdata3.push({ art: a, no_open_projects: newValue });
+		});
+	}
 
 	let plotdata = [];
 	for (const po in databypo) {
@@ -54,15 +83,6 @@ const OpenProjects = ({ data, month }) => {
 		plotdata2.push({
 			copy: copyname[0],
 			no_open_projects: databycopy[copy].length,
-		});
-	}
-
-	let plotdata3 = [];
-	for (const art in databyart) {
-		let artname = art.split(",", 2);
-		plotdata3.push({
-			art: art,
-			no_open_projects: databyart[art].length,
 		});
 	}
 

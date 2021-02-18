@@ -1,5 +1,6 @@
 .App {
 	width: 100vw;
+	overflow: hidden;
 	text-align: center;
 	display: flex;
 	flex-direction: column;

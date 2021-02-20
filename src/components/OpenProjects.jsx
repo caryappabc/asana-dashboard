@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	BarChart,
 	Bar,
@@ -10,8 +10,26 @@ import {
 	Legend,
 } from "recharts";
 import { Typography } from "@material-ui/core";
+import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+	formControl: {
+		margin: theme.spacing(1),
+		minWidth: 120,
+		maxWidth: 300,
+	},
+}));
 
 const OpenProjects = ({ data, month }) => {
+	const classes = useStyles();
+	const [status, setStatus] = useState([]);
+
+	let statuses = [...new Set(data.map((item) => item.section[0]))];
+	const handleStatusChange = (event) => {
+		setStatus(event.target.value);
+	};
+
 	data = data.filter((d) => {
 		return d["open/closed"] === "open";
 	});
@@ -19,6 +37,12 @@ const OpenProjects = ({ data, month }) => {
 	if (!(month.length === 0)) {
 		data = data.filter((d) => {
 			return month.includes(d.Handshake_Month);
+		});
+	}
+
+	if (!(status.length === 0)) {
+		data = data.filter((d) => {
+			return status.includes(d.section[0]);
 		});
 	}
 
@@ -88,6 +112,24 @@ const OpenProjects = ({ data, month }) => {
 
 	return (
 		<React.Fragment>
+			<FormControl className={classes.formControl}>
+				<InputLabel id="demo-mutiple-name-label">Status</InputLabel>
+				<Select
+					labelId="demo-mutiple-name-label"
+					id="demo-mutiple-name"
+					multiple
+					className={classes.select}
+					inputProps={{ classes: { icon: classes.icon } }}
+					value={status}
+					onChange={handleStatusChange}
+				>
+					{statuses.map((name) => (
+						<MenuItem key={name} value={name}>
+							{name}
+						</MenuItem>
+					))}
+				</Select>
+			</FormControl>
 			<BarChart
 				width={800}
 				height={550}

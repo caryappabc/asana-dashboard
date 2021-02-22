@@ -124,7 +124,7 @@ const OpenProjects = ({ data, month }) => {
 					onChange={handleStatusChange}
 				>
 					{statuses.map((name) => (
-						<MenuItem key={name} value={name}>
+						<MenuItem key={statuses.indexOf(name)} value={name}>
 							{name}
 						</MenuItem>
 					))}

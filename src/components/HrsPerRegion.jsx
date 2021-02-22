@@ -61,7 +61,7 @@ const HrsPerRegion = ({ data, month, type, po }) => {
 			} else if (reg === "APA") {
 				return 767.3 * multiplier - sum;
 			} else if (reg === "Africa") {
-				return 438.1 * multiplier - sum;
+				return 482.2 * multiplier - sum;
 			} else if (reg === "none") {
 				return 426 * multiplier - sum;
 			}

@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+
 const token = process.env.REACT_APP_ACCESS_TOKEN;
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -147,7 +148,7 @@ const App = () => {
 	};
 
 	return (
-		<div className="App">
+		<div className="App" >
 			{loading === false ? (
 				<div className={classes.root}>
 					<Grid className={classes.top} container spacing={3}>

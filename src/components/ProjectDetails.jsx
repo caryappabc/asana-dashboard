@@ -182,7 +182,7 @@ const ProjectDetails = ({ data, po, type, month, region }) => {
 								</TableCell>
 								<TableCell className={classes.fontcolor}>{pr.copy} </TableCell>
 								<TableCell className={classes.fontcolor}>
-									{pr.section}
+									{pr.section[0]}
 								</TableCell>
 								<TableCell className={classes.fontcolor}>
 									{pr["open/closed"]}

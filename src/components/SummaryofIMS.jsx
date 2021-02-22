@@ -42,12 +42,32 @@ const SummaryofIMS = ({ data, region, type, po, assignee }) => {
 
 	let plotdata = [];
 
+	let hoursinregion = {
+		NAM : 678.2 ,
+		LAM : 418.5,
+		Europe : 781.1,
+		CEN : 732.1,
+		WCA : 438.1,
+		APA : 767.3,
+		Africa : 482.2,
+		none : 426,
+	}
+
+	let allocated = 0;
+	if(region.length !== 0){
+		for (let i in region){
+			allocated += hoursinregion[region[i]]; 
+		}
+		
+	}else{
+		allocated = 4297.5;
+	}
+
 	for (const month in databymonths) {
 		const sum = databymonths[month]
 			.map((task) => task.Set_Hours)
 			.reduce((prev, curr) => prev + curr, 0);
-
-		const remaining = 2982 - sum;
+		const remaining = (allocated - sum).toFixed(1);
 		plotdata.push({
 			month: month,
 			hours: sum,

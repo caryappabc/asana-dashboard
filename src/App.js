@@ -154,8 +154,6 @@ const App = () => {
 		return null;
 	}
 
-	const brandnames = [...new Set(taskDetails.map((item) => item.brand))];
-	console.log(brandnames);
 
 	const handleChangeyear = (event) => {
 		setYear(event.target.value);

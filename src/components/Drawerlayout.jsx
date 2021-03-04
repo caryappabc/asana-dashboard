@@ -311,7 +311,6 @@ const Drawerlayout = ({ details, year , brand }) => {
 		return d.Year === year && d.brand === brand;
 	});
 
-	console.log(fd);
 
 	fd.sort(function (a, b) {
 		return Mname.indexOf(a.Handshake_Month) - Mname.indexOf(b.Handshake_Month);

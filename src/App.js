@@ -61,7 +61,6 @@ const App = () => {
 	const [didMount, setDidMount] = useState(false);
 	const [yearsList, setYearsList] = useState([]);
 	const [year, setYear] = useState();
-	const [brandList, setBrandList] = useState([]);
 	const [brand, setBear] = useState("Maersk");
 
 	const client = asana.Client.create().useAccessToken(token);
@@ -143,8 +142,6 @@ const App = () => {
 			await Promise.all(vals).then((data) => {
 				setTaskDetails(data);
 			});
-			const brandnames = [...new Set(taskDetails.map((item) => item.brand))];
-			setBrandList(brandnames);
 
 			setLoading(false);
 			return () => setDidMount(false);

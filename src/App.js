@@ -61,10 +61,13 @@ const App = () => {
 	const [didMount, setDidMount] = useState(false);
 	const [yearsList, setYearsList] = useState([]);
 	const [year, setYear] = useState();
+	const [brandList, setBrandList] = useState([]);
+	const [brand, setBear] = useState("Maersk");
 
 	const client = asana.Client.create().useAccessToken(token);
 
-	let projectids = process.env.REACT_APP_PROJECTIDS.split(",");
+	let projectids = process.env.REACT_APP_PROJECTIDS.split(",")
+	let Sealandids = process.env.REACT_APP_PROJECTIDSSLD.split(",");
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -74,8 +77,9 @@ const App = () => {
 		for (var i = startYear; i <= currentYear; i++) {
 			years.push(startYear++);
 		}
-		setYearsList(years);
+		setYearsList(years);	
 		setYear(currentYear);
+
 	}, []);
 
 	useEffect(() => {
@@ -117,6 +121,9 @@ const App = () => {
 								}
 							}
 						});
+						let sealand = tk.projects.some(p=>
+							Sealandids.includes(p.gid));
+						let Brand = sealand ? "Sealand" : "Maersk";
 						let details = {
 							gid: tk.gid,
 							name: tk.name,
@@ -125,6 +132,7 @@ const App = () => {
 							customfield: tk.custom_fields,
 							completed: tk.completed,
 							section: section,
+							brand : Brand,
 						};
 						return details;
 					});
@@ -135,6 +143,9 @@ const App = () => {
 			await Promise.all(vals).then((data) => {
 				setTaskDetails(data);
 			});
+			const brandnames = [...new Set(taskDetails.map((item) => item.brand))];
+			setBrandList(brandnames);
+
 			setLoading(false);
 			return () => setDidMount(false);
 		})();
@@ -143,8 +154,15 @@ const App = () => {
 		return null;
 	}
 
-	const handleChange = (event) => {
+	const brandnames = [...new Set(taskDetails.map((item) => item.brand))];
+	console.log(brandnames);
+
+	const handleChangeyear = (event) => {
 		setYear(event.target.value);
+	};
+
+	const handleChangebrand = (event) => {
+		setBear(event.target.value);
 	};
 
 	return (
@@ -167,7 +185,7 @@ const App = () => {
 									className={classes.select}
 									inputProps={{ classes: { icon: classes.icon } }}
 									value={year}
-									onChange={handleChange}
+									onChange={handleChangeyear}
 								>
 									{yearsList.map((y) => (
 										<MenuItem key={y} value={y}>
@@ -176,9 +194,32 @@ const App = () => {
 									))}
 								</Select>
 							</FormControl>
+							<FormControl className={classes.year}>
+								<InputLabel
+									id="demo-mutiple-name-label-year"
+									style={{ color: "white" }}
+								>
+									Brand
+								</InputLabel>
+								<Select
+									labelId="demo-mutiple-name-label-year"
+									id="demo-mutiple-name-year"
+									className={classes.select}
+									inputProps={{ classes: { icon: classes.icon } }}
+									value={brand}
+									onChange={handleChangebrand}
+								>
+									<MenuItem value="Maersk">
+											Maersk
+										</MenuItem>
+										<MenuItem value="Sealand">
+											Sealand
+										</MenuItem>
+								</Select>
+							</FormControl>
 						</Grid>
 						<Grid item xs={12}>
-							<Drawerlayout details={taskDetails} year={year} />
+							<Drawerlayout details={taskDetails} year={year} brand={brand} />
 						</Grid>
 					</Grid>
 				</div>

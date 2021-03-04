@@ -30,6 +30,12 @@ const OpenProjects = ({ data, month }) => {
 		setStatus(event.target.value);
 	};
 
+	data = data
+		.filter((d) => {
+			return d.Project_status !== "On Hold";
+		})
+		.filter((d) => d.Project_status !== "Cancelled");
+
 	data = data.filter((d) => {
 		return d["open/closed"] === "open";
 	});
@@ -53,6 +59,11 @@ const OpenProjects = ({ data, month }) => {
 
 	let databycopy = data.reduce((r, a) => {
 		r[a.copy] = [...(r[a.copy] || []), a];
+		return r;
+	}, {});
+	
+	let databyregion = data.reduce((r, a) => {
+		r[a.Region] = [...(r[a.Region] || []), a];
 		return r;
 	}, {});
 
@@ -109,6 +120,14 @@ const OpenProjects = ({ data, month }) => {
 			no_open_projects: databycopy[copy].length,
 		});
 	}
+	let plotdata4 = [];
+		for (const region in databyregion) {
+			let regionname = region
+			plotdata4.push({
+				region: regionname,
+				no_open_projects: databyregion[region].length,
+			});
+		}
 
 	return (
 		<React.Fragment>
@@ -208,6 +227,32 @@ const OpenProjects = ({ data, month }) => {
 				</Bar>
 			</BarChart>
 			<Typography>Open Project per Art</Typography>
+			<BarChart
+				width={800}
+				height={550}
+				data={plotdata4}
+				layout="vertical"
+				maxBarSize={40}
+				margin={{ top: 50, right: 20, left: 50, bottom: 5 }}
+			>
+				<CartesianGrid strokeDasharray="3 3" />
+				<XAxis type="number" />
+				<YAxis type="category" dataKey="region" />
+				<Tooltip />
+				<Legend />
+				<Bar
+					dataKey="no_open_projects"
+					name="No of Open projects"
+					fill="#8F76A5"
+				>
+					<LabelList
+						dataKey="no_open_projects"
+						position="inside"
+						fill="#FFFFFF"
+					/>
+				</Bar>
+			</BarChart>
+			<Typography>Open Project per Region</Typography>
 		</React.Fragment>
 	);
 };

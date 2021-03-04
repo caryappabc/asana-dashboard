@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Drawerlayout = ({ details, year }) => {
+const Drawerlayout = ({ details, year , brand }) => {
 	const classes = useStyles();
 	const [value, setValue] = useState(0);
 	const [reg, setRegion] = useState([]);
@@ -201,6 +201,7 @@ const Drawerlayout = ({ details, year }) => {
 					return field;
 				}
 			});
+			
 			let getart = (art1, atr2) => {
 				let artT = [];
 				let ar1 =
@@ -233,6 +234,7 @@ const Drawerlayout = ({ details, year }) => {
 				section: it.section.filter(function (element) {
 					return element !== undefined;
 				}),
+				brand : it.brand,
 				assignee:
 					typeof it.assignee === "undefined" || it.assignee === null
 						? "none"
@@ -306,8 +308,10 @@ const Drawerlayout = ({ details, year }) => {
 	});
 
 	let fd = dataset.filter((d) => {
-		return d.Year === year;
+		return d.Year === year && d.brand === brand;
 	});
+
+	console.log(fd);
 
 	fd.sort(function (a, b) {
 		return Mname.indexOf(a.Handshake_Month) - Mname.indexOf(b.Handshake_Month);
@@ -440,7 +444,7 @@ const Drawerlayout = ({ details, year }) => {
 					labelId="demo-mutiple-name-label4"
 					id="demo-mutiple-name"
 					multiple
-					disabled
+					disabled={[0, 2, 3, 4, 5].includes(value) ? true : false}
 					className={classes.select}
 					inputProps={{ classes: { icon: classes.icon } }}
 					value={art}
@@ -463,7 +467,7 @@ const Drawerlayout = ({ details, year }) => {
 					multiple
 					className={classes.select}
 					inputProps={{ classes: { icon: classes.icon } }}
-					disabled={[0, 2, 3, 4, 5, 6].includes(value) ? true : false}
+					disabled={[0, 2, 3, 4, 5].includes(value) ? true : false}
 					value={copy}
 					onChange={handleCopyChange}
 				>
@@ -517,6 +521,7 @@ const Drawerlayout = ({ details, year }) => {
 							type={reqtype}
 							po={po}
 							copy={copy}
+							art={art}
 						/>
 						<Typography variant="h5">Total Num Request per Month</Typography>
 					</CardContent>
@@ -581,6 +586,8 @@ const Drawerlayout = ({ details, year }) => {
 							type={reqtype}
 							region={reg}
 							month={month}
+							art={art}
+							copy={copy}
 						/>
 					</CardContent>
 				</Card>

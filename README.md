@@ -1,1 +1,3 @@
-Dashboard Generated using Asana API and build unsing ReactJS and Material UI Interface.
+ReactJS Dashboard intigrated with ASANA API
+Graphs package - Rechart.js
+Metirial UI

@@ -103,7 +103,7 @@ function TablePaginationActions(props) {
 	);
 }
 
-const ProjectDetails = ({ data, po, type, month, region }) => {
+const ProjectDetails = ({ data, po, type, month, region, art , copy }) => {
 	const classes = useStyles();
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -135,11 +135,25 @@ const ProjectDetails = ({ data, po, type, month, region }) => {
 		});
 	}
 
+	if (art.length !== 0) {
+		data = data.filter((d) => {
+			return d.art.length === 2 ? art.includes(d.art[0]) || art.includes(d.art[1]) : art.includes(d.art[0]);
+		});
+	}
+
+	if (copy.length !== 0) {
+		data = data.filter((d) => {
+			return copy.includes(d.copy);
+		});
+	}
+
+
 	if (month.length !== 0) {
 		data = data.filter((d) => {
 			return month.includes(d.Handshake_Month);
 		});
 	}
+	
 
 	return (
 		<React.Fragment>
@@ -178,7 +192,7 @@ const ProjectDetails = ({ data, po, type, month, region }) => {
 								<TableCell className={classes.fontcolor}>{pr.Name} </TableCell>
 								<TableCell className={classes.fontcolor}>{pr.po} </TableCell>
 								<TableCell className={classes.fontcolor}>
-									{pr.art[0]} {pr.art[1]}{" "}
+									{pr.art[0]}{pr.art.length > 1 ? ", " : ""}{pr.art[1]}
 								</TableCell>
 								<TableCell className={classes.fontcolor}>{pr.copy} </TableCell>
 								<TableCell className={classes.fontcolor}>
